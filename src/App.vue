@@ -20,6 +20,7 @@ export default {
 
 <style>
 @import 'common/style/default.css';
+@import 'common/sell-icon/style.css';
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

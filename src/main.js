@@ -4,7 +4,7 @@ import Vue from 'vue';
 import App from './App';
 import resource from 'vue-resource';
 import router from './router';
-
+// 加入vue-resource中间件
 Vue.use(resource);
 Vue.config.productionTip = false;
 

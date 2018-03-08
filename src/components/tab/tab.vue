@@ -21,7 +21,8 @@ export default {
     width: 100%;
     background: #f9f9f9;
     list-style: none;
-    padding-left: 0;
+    padding: 0;
+    margin: 0;
   }
   .tab::after {
     position: absolute;
@@ -43,7 +44,7 @@ export default {
   }
 
   .tab li a.v-active {
-    background-color: red;
+    background-color: #05d2c9;
     color: #fff;
   }
 </style>

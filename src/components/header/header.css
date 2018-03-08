@@ -1,0 +1,138 @@
+.background {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    filter: blur(7px);
+    z-index: -1;
+  }
+
+  .content-wraper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding-bottom: 18px;
+  }
+  .content-wraper .avatar {
+    margin: 24px 0 0 24px;
+    width: 6.4rem;
+    height: 6.4rem;
+  }
+  .content-wraper .avatar img {
+    height: 100%;
+    width: 100%;
+    border-radius: 0.2rem;
+  }
+
+  .content-wraper .content {
+    margin:26px 0 0 16px;
+  }
+
+  .content .title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1.6rem;
+    color: rgb(255,255,255);
+    font-weight: bold;
+    line-height: 1.8rem;
+  }
+  .content .title img {
+    height: 2.1rem;
+  }
+  .content .title span {
+    margin-left: 6px;
+  }
+
+  .content .desc {
+    margin-top: 8px;
+    font-size: 1.2rem;
+    color: rgb(255,255,255);
+    font-weight: 200;
+    line-height: 1.2rem;
+    text-align: left;
+  }
+  .content .support {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .content .support  .icon{
+    display: block;
+    width: 1.2rem;
+    height: 1.2rem;
+    background-size: 100%;
+  }
+  .content .support .info {
+    margin-left: 4px;
+    font-size: 1rem;
+    color: rgb(255,255,255);
+    font-weight: 200;
+    line-height: 1rem;
+  }
+  .content .support .tips {
+    position: relative;
+  }
+  .content .support .tips span {
+    position: absolute;
+    top: -14px;
+    left: 20px;
+    display: block;
+    width: 2.4rem;
+    height: 2.4rem;
+    background-color: rgba(0,0,0,.2);
+    border-radius: 50%;
+    color: #05d2c9;
+    font-weight: 200;
+    line-height: 2.4rem;
+  }
+  .content .support i {
+    line-height: 2.4rem;
+    vertical-align: middle;
+  }
+
+  /*支持信息中 针对不同的信息给出不同的图标*/
+  .support .decrease {
+    background-image: url('./img/decrease_1@3x.png');
+  }
+  .support .discount {
+    background-image: url('./img/discount_1@3x.png');
+  }
+  .support .special {
+    background-image: url('./img/special_1@3x.png');
+  }
+  .support .invoice {
+    background-image: url('./img/invoice_1@3x.png');
+  }
+
+  .notice {
+    position: relative;
+    height: 2.8rem;
+    padding: 0 22px 0 12px;
+    background-color: rgba(7,17,27,.2);
+    line-height: 2.8rem;
+    text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .notice .notice-icon {
+    display: inline-block;
+    background-image: url('./img/bulletin@3x.png');
+    background-size: 100%;
+    height: 1.2rem;
+    width: 2.2rem;
+    margin-top: 0.8rem;
+  }
+  .notice .notice-info {
+    margin:0 4px;
+    vertical-align: top;
+    font-size: 1rem;
+    color: #fff;
+  }
+  .notice .right-icon {
+    position: absolute;
+    right: 1.2rem;
+    top: 0;
+    line-height: 2.8rem;
+    color: #05d2c9;
+  }
