@@ -1,0 +1,20 @@
+html {font-size: 62.5%;}
+
+.hr::after {
+  content: '';
+  display: block;
+  width: 100%;
+  border: 1px solid #eee;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5) {
+  .hr::after {
+    transform: scaleY(.7);
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2) {
+  .hr::after {
+    transform: scaleY(.7);
+  }
+}

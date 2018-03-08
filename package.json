@@ -1,5 +1,5 @@
 {
-  "name": "y",
+  "name": "sell-app",
   "version": "1.0.0",
   "description": "sell application",
   "author": "jacecao <280749498@qq.com>",
@@ -11,7 +11,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "better-scroll": "^1.8.1",
     "vue": "^2.5.2",
+    "vue-resource": "^1.4.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
