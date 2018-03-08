@@ -22,7 +22,7 @@
       <span class="notice-icon"></span><span class="notice-info">{{seller.bulletin}}</span>
       <i class="icon-keyboard_arrow_right right-icon"></i>
     </div>
-    <v-detail/>
+    <v-detail :seller="seller"/>
   </header>
 </template>
 
