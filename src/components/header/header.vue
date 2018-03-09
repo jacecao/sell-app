@@ -12,17 +12,17 @@
         <p class="desc">{{seller.description}}/{{seller.deliveryTime}}分钟送达</p>
         <div class="support" v-if="seller.supports">
           <span class="icon" :class="classMap[seller.supports[0].type]"></span><span class="info">{{seller.supports[0].description}}</span>
-          <div class="tips">
+          <div class="tips" v-on:click="isShowDetail">
             <span>{{seller.supports.length}}<i class="icon-keyboard_arrow_right"></i></span>
           </div>
         </div>
       </div>
     </div>
-    <div class="notice">
+    <div class="notice" v-on:click="isShowDetail">
       <span class="notice-icon"></span><span class="notice-info">{{seller.bulletin}}</span>
       <i class="icon-keyboard_arrow_right right-icon"></i>
     </div>
-    <v-detail :seller="seller"/>
+    <v-detail v-show="showDetail" v-on:status="isShowDetail" :seller="seller" :classarr="classMap"/>
   </header>
 </template>
 
@@ -34,7 +34,8 @@ export default {
   data () {
     return {
       seller: {},
-      classMap: ['decrease', 'discount', 'special', 'invoice']
+      showDetail: false,
+      classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee']
     };
   },
   created () {
@@ -47,6 +48,11 @@ export default {
     }, res => {
       console.log('err get data');
     });
+  },
+  methods: {
+    isShowDetail () {
+      this.showDetail = !this.showDetail ? true : false;
+    }
   },
   components: {
     'v-detail': detail

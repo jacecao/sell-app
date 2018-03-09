@@ -22,7 +22,7 @@
 }
 
 .detail-title {
-    margin-top: 6.4rem;
+    margin-top: 64px;
 }
 
 .detail-title h3 {
@@ -30,4 +30,101 @@
     font-weight: 700;
     line-height: 1.6rem;
     text-align: center;
+    margin-bottom: 16px;
+}
+
+.info-content {
+  padding: 0 36px 0 36px;
+  margin: 28px;
+}
+
+.info-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.info-title .line {
+  display: block;
+  height: 1px;
+  background: rgba(255,255,255,.2);
+  flex-grow: 2;
+}
+.info-title span {
+  margin: 0 12px;
+  font-weight: 700;
+}
+
+/* 优惠信息 */
+.benefit-list {
+  padding: 0;
+  margin-left: 12px;
+}
+.benefit-list li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 12px;
+}
+/* icon */
+  .benefit-list li .icon {
+    display: block;
+    width: 1.2rem;
+    height: 1.2rem;
+    background-size: 100%;
+  }
+  /* 特惠文字 */
+  .benefit-list li .info {
+    margin-left: 6px;
+    font-size: 1rem;
+    color: rgb(255,255,255);
+    font-weight: 200;
+    line-height: 1.2rem;
+  }
+
+  /* 商家公告 */
+  .bulletin {
+    margin-top: 12px;
+    padding: 0 12px;
+    font-size: 1.2rem;
+    font-weight: 200;
+    color: rgb(255,255,255);
+    line-height: 2.4rem;
+    text-align: justify;
+  }
+
+  /*支持信息中 针对不同的信息给出不同的图标*/
+@media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5) {
+  .benefit-list .decrease {
+    background-image: url('../img/decrease_2@2x.png');
+  }
+  .benefit-list .discount {
+    background-image: url('../img/discount_2@2x.png');
+  }
+  .benefit-list .special {
+    background-image: url('../img/special_2@2x.png');
+  }
+  .benefit-list .invoice {
+    background-image: url('../img/invoice_2@2x.png');
+  }
+  .benefit-list .guarantee {
+    background-image: url('../img/guarantee_2@2x.png');
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2) {
+  .benefit-list .decrease {
+    background-image: url('../img/decrease_2@3x.png');
+  }
+  .benefit-list .discount {
+    background-image: url('../img/discount_2@3x.png');
+  }
+  .benefit-list .special {
+    background-image: url('../img/special_2@3x.png');
+  }
+  .benefit-list .invoice {
+    background-image: url('../img/invoice_2@3x.png');
+  }
+  .benefit-list .guarantee {
+    background-image: url('../img/guarantee_2@3x.png');
+  }
 }
