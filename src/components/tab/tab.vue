@@ -44,7 +44,8 @@ export default {
   }
 
   .tab li a.v-active {
-    background-color: #05d2c9;
-    color: #fff;
+    /*background-color: #05d2c9;*/
+    /*color: #fff;*/
+    color: #05d2c9;
   }
 </style>

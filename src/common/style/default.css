@@ -1,4 +1,6 @@
 html {font-size: 62.5%;}
+body { margin: 0; }
+
 .cleafix {
   display: inline-block;
 }
@@ -11,9 +13,16 @@ html {font-size: 62.5%;}
   visibility: hidden;
 }
 
+/* 1像素边框的实现 */
 
+.hr {
+  position: relative;
+}
 .hr::after {
   content: '';
+  bottom: 0;
+  left: 0;
+  position: absolute;
   display: block;
   width: 100%;
   border: 1px solid #eee;

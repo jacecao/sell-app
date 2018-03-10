@@ -19,7 +19,11 @@ export default {
 </script>
 
 <style>
+/*常规的默认设置*/
 @import 'common/style/default.css';
+/*不同优惠信息图标背景加载*/
+@import 'common/style/icon/default-icon.css';
+/*字体图标的加载*/
 @import 'common/sell-icon/style.css';
 
 #app {

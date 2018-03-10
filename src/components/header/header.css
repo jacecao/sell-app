@@ -91,7 +91,8 @@
   }
 
   /*支持信息中 针对不同的信息给出不同的图标*/
-  .support .decrease {
+  /* 已经在全局中引用了统一的标识加载模块 */
+/*   .support .decrease {
     background-image: url('./img/decrease_1@3x.png');
   }
   .support .discount {
@@ -102,7 +103,7 @@
   }
   .support .invoice {
     background-image: url('./img/invoice_1@3x.png');
-  }
+  } */
 
   .notice {
     position: relative;

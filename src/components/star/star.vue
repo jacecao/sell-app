@@ -5,13 +5,10 @@
 </template>
 
 <script>
-// 定义星星的个数
-const LEN = 5;
-// 定义星星不同状态的常量
-const STAR_ON = 'on';
-const STAR_OFF = 'off';
-const STAR_HALF = 'half';
+import {LEN, STAR_ON, STAR_OFF, STAR_HALF} from 'common/js/default-config.js';
+
 export default {
+  name: 'RatingStar',
   props: {
     size: Number,
     score: Number
