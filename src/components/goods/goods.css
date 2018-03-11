@@ -38,6 +38,19 @@ i {
         padding:0 12px;
         color: rgb(93, 88, 88);
       }
+      /* 激活当前列表的样式 */
+      .menu-wrapper .menu-active {
+        position: relative;
+        background-color: #fff;
+        z-index: 10;
+        margin-top: -1px;
+      }
+        .menu-wrapper .menu-active .text {
+          font-weight: 700;
+        }
+        .menu-wrapper .menu-active .text::after {
+          border: none;
+        }
       /* 垂直居中的实现 */
       /* 父元素为table 那么子元素就得是table-cell */
       .menu-wrapper .text {

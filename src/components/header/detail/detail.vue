@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import RatingStar from 'components/star/star.vue';
+import RatingStar from 'components/star/Star.vue';
 import {CLASS_MAP} from 'common/js/default-config.js';
 export default {
   name: 'Detail',

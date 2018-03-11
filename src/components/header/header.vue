@@ -30,28 +30,19 @@
 </template>
 
 <script>
-import detail from './detail/detail.vue';
+import Detail from './detail/Detail.vue';
 import {ERR_OK, CLASS_MAP} from 'common/js/default-config.js';
 
 export default {
   name: 'Header',
+  props: {
+    seller: Object
+  },
   data () {
     return {
-      seller: {},
       showDetail: false,
       classMap: CLASS_MAP
     };
-  },
-  created () {
-    // 通过vue-resource中间件请求数据
-    this.$http.get('/api/seller').then(res => {
-      // 返回的错误编号与设置的编号一样，那么数据请求成功
-      if (res.body.errno === ERR_OK) {
-        this.seller = res.body.data;
-      }
-    }, res => {
-      console.log('err get data');
-    });
   },
   methods: {
     isShowDetail () {
@@ -59,7 +50,7 @@ export default {
     }
   },
   components: {
-    'v-detail': detail
+    'v-detail': Detail
   }
 };
 </script>

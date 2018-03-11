@@ -1,19 +1,34 @@
 <template>
   <div id="app">
-    <v-header/>
+    <v-header :seller="seller"/>
     <v-tab/>
-    <router-view/>
+    <router-view :seller="seller"/>
   </div>
 </template>
 
 <script>
-import header from '@/components/header/header.vue';
-import tab from '@/components/tab/tab.vue';
+import Header from '@/components/header/Header.vue';
+import Tab from '@/components/tab/Tab.vue';
+import {ERR_OK} from 'common/js/default-config.js';
 export default {
   name: 'App',
+  data () {
+    return {seller: {}}
+  },
+  created () {
+    // 通过vue-resource中间件请求数据
+    this.$http.get('/api/seller').then(res => {
+      // 返回的错误编号与设置的编号一样，那么数据请求成功
+      if (res.body.errno === ERR_OK) {
+        this.seller = res.body.data;
+      }
+    }, res => {
+      console.log('err get data');
+    });
+  },
   components: {
-    'v-header': header,
-    'v-tab': tab
+    'v-header': Header,
+    'v-tab': Tab
   }
 };
 </script>

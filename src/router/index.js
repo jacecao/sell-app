@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import goods from 'components/goods/goods.vue';
-import seller from 'components/seller/seller.vue';
-import ratings from 'components/ratings/ratings.vue';
+import Goods from 'components/goods/Goods.vue';
+import Seller from 'components/seller/Seller.vue';
+import Ratings from 'components/ratings/Ratings.vue';
 
 Vue.use(Router);
 
@@ -11,19 +11,19 @@ export default new Router({
   linkActiveClass: 'v-active',
   routes: [
     {
-      path: '/goods',
+      path: '/',
       name: 'goods',
-      component: goods
+      component: Goods
     },
     {
       path: '/seller',
       name: 'seller',
-      component: seller
+      component: Seller
     },
     {
       path: '/ratings',
       name: 'ratings',
-      component: ratings
+      component: Ratings
     }
   ]
 });
