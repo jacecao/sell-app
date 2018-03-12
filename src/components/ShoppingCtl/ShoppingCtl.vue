@@ -15,14 +15,27 @@ export default {
   name: 'shoppingCtl',
   props: {
     food: Object,
-    selectFood: Array
+    default () {
+      return {
+        count: 1
+      }
+    }
   },
   data () {
     return {
       isActive: false
     };
   },
+  computed: {
+
+  },
   methods: {
+    // 外部触发更改显示状态
+    isShow () {
+      if (this.food.count && this.food.count > 0) {
+        this.isActive = true;
+      }
+    },
     clickAdd (event) {
       if (!this.food.count) {
         // 注意这里需要使用vue.set方法来设置对象的属性。
@@ -71,6 +84,8 @@ export default {
     font-size: 1rem;
     color: rgb(147, 153, 159);
     padding: 0 10px;
+    min-width: 14px;
+    width: 14px;
   }
 
   .fade-enter,.fade-leave-to {

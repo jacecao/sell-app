@@ -57,8 +57,45 @@ Vue中父组件和子组件的通信，都离不开上面几个方法，子组�
 ```
 而ref和$refs,则是父组件最常用的获取子组件对象的最佳方法，父组件需要主动触发子组件某个方法则必须使用ref和$refs
 
+* #### 如何强制浏览器更新视图
 
-* ####bug
+在小球下落的动画中我们使用clientHeight来强制浏览器对页面的渲染，那么究竟是为什么呢？
+
+例如我想一个图片hover的时候即刻变小，然后过渡放大到原来大小
+```javascript
+div.onmouseover = function(){
+    div.className = 'small';
+    div.className = 'transition'
+}
+```
+但浏览器会将上面两个操作合并了成div.className = 'transition'，而没有分别渲染两个效果，
+
+代码只需要改成这样就行了：
+```javascript
+div.onmouseover = function(){
+    div.className = 'small';
+    setTimeout(function(){
+        div.className = 'transition';
+    }, 5000);
+}
+```
+setTimeout这个异步函数将会给主进程空闲出5秒的时间用于网页渲染，这样你就能看到两个效果了。
+
+浏览器很聪明，会对Paint进行优化，如果允许，会在代码栈退出后再进行刷新绘制。为什么setTimeout里面的class赋值会生效，原因就是setTimeout里面的函数放在了另外的代码栈，由事件去异步调用。
+
+但是，我们也可以强制浏览器在同一个代码栈中进行重新绘制。这里就是上面说的“如果允许”的例外情况，看一下代码：
+```javascript
+div.onmouseover = function () {
+    div.className = 'small';
+    console.log(div.clientHeight); // 这句话强制浏览器进行重新绘制
+    div.className = 'transition';
+}
+```
+上面的代码console语句让浏览器知道，“他要获得div的布局或者样式信息了，我必须先把之前的样式设定刷新一下，才能给你正确的值”，于是浏览器就重新绘制了。后面等函数结束后，又一次重新绘制transition的效果。如果这里你还是没有肉眼看出变化，这个真的就是“太快了，你看不到”。
+
+[原文在这里](https://segmentfault.com/q/1010000006771100)
+
+* #### bug
 
 1. 问题表现：需要指定优惠信息显示宽度；头部信息布局需要重新调整，还是应该flex布局
 

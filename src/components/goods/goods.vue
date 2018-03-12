@@ -25,7 +25,7 @@
                 </div>
               </div>
               <div class="buttons">
-                <v-button :food="food" :selectFood = "selectFoods" v-on:balldrop="ballListener"/>
+                <v-button :food="food" v-on:balldrop="ballListener"/>
               </div>
             </li>
           </ul>

@@ -1,4 +1,5 @@
 <template>
+  <!-- 地不购物栏按钮 -->
   <div class="shopping-cart">
     <div class="shop-info col-line">
       <button class="shop-bar" :class="{'shop-bar-active': hasFood}">
@@ -25,10 +26,28 @@
         <div class="ball" v-show="ball.show"></div>
       </transition>
     </div>
+
+    <!-- 购物车列表 -->
+    <div class="shopping-list">
+      <div class="list-header hr">
+        <span>购物车</span>
+        <button class="clear" @click="clearSelect">清空</button>
+      </div>
+      <div class="list-content-wrapper">
+        <ul class="list-container">
+          <li class="list-item hr" v-for="food of selectFoods">
+            <span class="item-name">{{food.name}}</span>
+            <span class="item-cash"><span class="icon">￥</span>{{food.price * food.count}}</span>
+            <v-button :food="food" class="list-ctl" @balldrop="drop"/>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import ShoppingCtl from 'components/ShoppingCtl/ShoppingCtl.vue';
 export default {
   name: 'shoppine-cart',
   props: {
@@ -103,6 +122,9 @@ export default {
     }
   },
   methods: {
+    clearSelect () {
+      this.selectFoods = [];
+    },
     // 执行小球下落动画
     drop (target) {
       // 获取当前可以触发下落动画的小球
@@ -139,6 +161,14 @@ export default {
     },
     enter (el) {
       // 这里是主动触发浏览器对页面的渲染
+      // 这里非常关键，如果没有强制重绘那么动画效果就难以实现
+      // 为什么会这样呢？
+      // 主要是因为我们在同一执行栈中给el同样的属性设置了不同的值
+      // el.style.transform 设置了不同的值
+      // 浏览器在执行过程中就会直接设置为最后一个值
+      // 类似于 var a = 1; a = 2; 最后你看不到a = 1 再到 a = 2这个过程
+      // 所以这里执行el.offsetHeight，在获取该元素自身高度时，
+      // 浏览器必须按照已经设置好的属性重新绘制页面
       el.offsetHeight;
       this.$nextTick(() => {
         el.style.webkitTransform = 'translate3d(0,0,0';
@@ -152,12 +182,15 @@ export default {
         el.style.display = 'none';
       }
     },
+  },
+  components: {
+    'v-button': ShoppingCtl
   }
 };
 </script>
 
 <style scoped>
-  @import './shopping-cart.css';
+  @import './ShoppingCart.css';
   .shopping-cart {
     position: fixed;
     display: flex;
