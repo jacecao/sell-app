@@ -1,20 +1,22 @@
 <template>
   <!-- 地不购物栏按钮 -->
   <div class="shopping-cart">
-    <div class="shop-info col-line">
-      <button class="shop-bar" :class="{'shop-bar-active': hasFood}">
-        <i class="icon-shopping_cart cart-icon"></i>
-        <span class="total-count" v-show="hasFood">{{totalCount}}</span>
-      </button>
-      <span class="shop-money">￥<span class="total" :class="{'shop-money-active': hasFood}">{{totalPrice}}</span>元</span>
+    <!-- 购物底边栏 -->
+    <div class="shopping-bar">
+      <div class="shop-info col-line">
+        <button class="shop-bar" :class="{'shop-bar-active': hasFood}" @click="toggleList">
+          <i class="icon-shopping_cart cart-icon"></i>
+          <span class="total-count" v-show="hasFood">{{totalCount}}</span>
+        </button>
+        <span class="shop-money">￥<span class="total" :class="{'shop-money-active': hasFood}">{{totalPrice}}</span>元</span>
+      </div>
+      <div class="shop-tip">
+        <p class="shop-tip-text">另需配送费￥{{deliveryPrice}}元</p>
+      </div>
+      <div class="shop-pay" :class="{'shop-pay-active': mayPay}">
+        <button class="shop-pay-button">{{changePay}}</button>
+      </div>
     </div>
-    <div class="shop-tip">
-      <p class="shop-tip-text">另需配送费￥{{deliveryPrice}}元</p>
-    </div>
-    <div class="shop-pay" :class="{'shop-pay-active': mayPay}">
-      <button class="shop-pay-button">{{changePay}}</button>
-    </div>
-
     <!-- 下落小球 -->
     <div class="ball-container">
       <transition
@@ -26,28 +28,34 @@
         <div class="ball" v-show="ball.show"></div>
       </transition>
     </div>
-
     <!-- 购物车列表 -->
-    <div class="shopping-list">
-      <div class="list-header hr">
-        <span>购物车</span>
-        <button class="clear" @click="clearSelect">清空</button>
+    <transition name="move">
+      <div class="shopping-list" v-show="showList">
+        <div class="list-header hr">
+          <span>购物车</span>
+          <button class="empty" @click="emptySelect">清空</button>
+        </div>
+        <div class="list-content-wrapper" ref="list">
+          <ul class="list-container">
+            <li class="list-item hr" v-for="food of selectFoods">
+              <span class="item-name">{{food.name}}</span>
+              <span class="item-cash"><span class="icon">￥</span>{{food.price * food.count}}</span>
+              <v-button :food="food" class="list-ctl" @balldrop="drop"/>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="list-content-wrapper">
-        <ul class="list-container">
-          <li class="list-item hr" v-for="food of selectFoods">
-            <span class="item-name">{{food.name}}</span>
-            <span class="item-cash"><span class="icon">￥</span>{{food.price * food.count}}</span>
-            <v-button :food="food" class="list-ctl" @balldrop="drop"/>
-          </li>
-        </ul>
-      </div>
-    </div>
+    </transition>
+    <!-- 遮罩 -->
+    <transition name="fade">
+      <div class="list-mask" v-show="showList" @click="toggleList"></div>
+    </transition>
   </div>
 </template>
 
 <script>
 import ShoppingCtl from 'components/ShoppingCtl/ShoppingCtl.vue';
+import Scroll from 'better-scroll';
 export default {
   name: 'shoppine-cart',
   props: {
@@ -75,7 +83,8 @@ export default {
       hasFood: false,
       mayPay: false,
       balls: [{show: false},{show: false},{show: false},{show: false},{show: false}],
-      dropBalls: []
+      dropBalls: [],
+      showList: false
     };
   },
   computed: {
@@ -101,6 +110,8 @@ export default {
         });
       } else {
         this.hasFood = false;
+        // 如果没有选择产品那么关闭产品列表
+        this.showList = false;
       }
       return _totalCount;
     },
@@ -122,8 +133,29 @@ export default {
     }
   },
   methods: {
-    clearSelect () {
-      this.selectFoods = [];
+    // 折叠购物清单
+    toggleList () {
+      if (this.totalCount > 0) {
+        this.showList = !this.showList ? true : false;
+      }
+      // 如果当前要显示列表
+      if (this.showList) {
+        // 那么在下次更新DOM中生效
+        this.$nextTick(() => {
+          if (!this.scroll) {
+            this.scroll = new Scroll(this.$refs['list'], {mouseWheel: true});
+          } else {
+            this.scroll.refresh();
+          }
+          // console.log(this.$refs.list);
+        });
+      }
+    },
+    // 情况购物清单
+    emptySelect () {
+      this.selectFoods.forEach(food => {
+        food.count = 0;
+      });
     },
     // 执行小球下落动画
     drop (target) {
@@ -193,11 +225,6 @@ export default {
   @import './ShoppingCart.css';
   .shopping-cart {
     position: fixed;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background: #141d27;
-    height: 48px;
     width: 100%;
     bottom: 0;
     left: 0;

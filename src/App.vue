@@ -48,4 +48,11 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+/*常用过渡动画css*/
+.fade-enter,.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-active,.fade-leave-active {
+  transition: all .5s;
+}
 </style>

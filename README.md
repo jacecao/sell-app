@@ -95,6 +95,115 @@ div.onmouseover = function () {
 
 [原文在这里](https://segmentfault.com/q/1010000006771100)
 
+* #### 在购物添加按钮组件中数据合理运用的重要性
+
+在shoppingCtl组件中，如果按照下面来定义组件，将会出现意外情况
+```javascript
+<template>
+  <div class="food-button">
+    <transition name="move">
+      <button type="button" class="buttons" v-show="isActive" @click="clickRemove"><i class="icon-remove_circle_outline"></i></button>
+    </transition>
+    <transition name="fade">
+      <span class="count" v-show="isActive">{{food.count}}</span>
+    </transition>
+    <button type="button" class="buttons" @click="clickAdd"><i class="icon-add_circle"></i></button>
+  </div>
+</template>
+
+<script>
+// 这里需要注意的地方，如果这里自定义一个属性用来控制按钮是否显示，那么将会找出不堪的后果
+// 不妨试一试会发生什么情况
+export default {
+  name: 'shoppingCtl',
+  props: {
+    food: {
+      type: Object,
+      default () {
+        return {
+          count: 1
+        }
+      }
+    }
+  },
+  data () {
+    return {isActive: false}
+  },
+  methods: {
+    // 点击添加按钮
+    clickAdd (event) {
+      if (!this.food.count) {
+        this.$set(this.food, 'count', 1);
+        this.isActive = true;
+      } else {
+        this.food.count ++;
+      }
+    },
+    // 添加移除按钮
+    clickRemove () {
+      if (this.food.count && this.food.count > 0) {
+        this.food.count --;
+        if (this.food.count == 0) {
+          this.isActive = false;
+        }
+      }
+    }
+  }
+};
+</script>
+```
+由于这个组件需要在不同的组件中复用，且有些复用之间有数据关联(有些组件中会引用同一food数据)，如果在有数据关联的组件中你会发现这个组件在判断是否显示按钮（isActive）中就会出现问题。
+
+**所以在需要复用的组件中最好使用传递数据来控制元素的一切动作，而不要使用内部数据来控制，这样能避免对数据联动性的破坏**，所以上面的例子改成下面这样就更简洁优雅。
+```javascript
+<template>
+  <div class="food-button">
+    <transition name="move">
+      <button type="button" class="buttons" v-show="food.count" @click="clickRemove"><i class="icon-remove_circle_outline"></i></button>
+    </transition>
+    <transition name="fade">
+      <span class="count" v-show="food.count">{{food.count}}</span>
+    </transition>
+    <button type="button" class="buttons" @click="clickAdd"><i class="icon-add_circle"></i></button>
+  </div>
+</template>
+
+<script>
+// 这里需要注意的地方，如果这里自定义一个属性用来控制按钮是否显示，那么将会找出不堪的后果
+// 不妨试一试会发生什么情况
+export default {
+  name: 'shoppingCtl',
+  props: {
+    food: {
+      type: Object,
+      default () {
+        return {
+          count: 1
+        }
+      }
+    }
+  },
+  methods: {
+    // 点击添加按钮
+    clickAdd (event) {
+      if (!this.food.count) {
+        this.$set(this.food, 'count', 1);
+      } else {
+        this.food.count ++;
+      }
+    },
+    // 添加移除按钮
+    clickRemove () {
+      if (this.food.count && this.food.count > 0) {
+        this.food.count --;
+      }
+    }
+  }
+};
+</script>
+```
+你看这样就更符合数据驱动的思想，且在复用时能更好的体现数据联动性。
+
 * #### bug
 
 1. 问题表现：需要指定优惠信息显示宽度；头部信息布局需要重新调整，还是应该flex布局

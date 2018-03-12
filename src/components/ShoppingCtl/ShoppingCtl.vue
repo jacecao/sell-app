@@ -1,41 +1,32 @@
 <template>
   <div class="food-button">
     <transition name="move">
-      <button type="button" class="buttons" v-show="isActive" @click="clickRemove"><i class="icon-remove_circle_outline"></i></button>
+      <button type="button" class="buttons" v-show="food.count" @click="clickRemove"><i class="icon-remove_circle_outline"></i></button>
     </transition>
     <transition name="fade">
-      <span class="count" v-show="isActive">{{food.count}}</span>
+      <span class="count" v-show="food.count">{{food.count}}</span>
     </transition>
     <button type="button" class="buttons" @click="clickAdd"><i class="icon-add_circle"></i></button>
   </div>
 </template>
 
 <script>
+// 这里需要注意的地方，如果这里自定义一个属性用来控制按钮是否显示，那么将会找出不堪的后果
+// 不妨试一试会发生什么情况
 export default {
   name: 'shoppingCtl',
   props: {
-    food: Object,
-    default () {
-      return {
-        count: 1
+    food: {
+      type: Object,
+      default () {
+        return {
+          count: 1
+        }
       }
     }
   },
-  data () {
-    return {
-      isActive: false
-    };
-  },
-  computed: {
-
-  },
   methods: {
-    // 外部触发更改显示状态
-    isShow () {
-      if (this.food.count && this.food.count > 0) {
-        this.isActive = true;
-      }
-    },
+    // 点击添加按钮
     clickAdd (event) {
       if (!this.food.count) {
         // 注意这里需要使用vue.set方法来设置对象的属性。
@@ -43,17 +34,20 @@ export default {
         this.$set(this.food, 'count', 1);
         this.isActive = true;
       } else {
-        this.food.count += 1;
+        this.food.count ++;
       }
        // 触发小球下落动画事件事件
        // 注意这里之所以有event.target,是因为这里由原生click事件生成一个event对象
        // 这里将目标元素传给父组件，用于动画事件定位动画起始位置
       this.$emit('balldrop', event.target);
     },
+    // 添加移除按钮
     clickRemove () {
-      this.food.count -= 1;
-      if (this.food.count == 0) {
-        this.isActive = false;
+      if (this.food.count && this.food.count > 0) {
+        this.food.count --;
+        if (this.food.count == 0) {
+          this.isActive = false;
+        }
       }
     }
   }

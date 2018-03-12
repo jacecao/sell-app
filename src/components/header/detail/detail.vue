@@ -1,5 +1,5 @@
 <template>
-  <div class="header-detail">
+  <div class="header-detail" v-on:click="changeStatus">
     <div class="detail-wrapper clearfix">
       <div class="detail-content">
         <!-- 店名-标题 -->
@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <button type="button" class="detail-closed" v-on:click="changStatus"><i class="icon-close"></i></button>
+    <button type="button" class="detail-closed"><i class="icon-close"></i></button>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
     // console.log(this.classarr);
   },
   methods: {
-    changStatus () {
+    changeStatus () {
       // 触发status事件，告诉父组件子组件状态变化
       // 父组件需要监听子组件status事件和事件回调函数
       this.$emit('status');

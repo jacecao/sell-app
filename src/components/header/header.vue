@@ -62,11 +62,4 @@ export default {
     background-color: rgba(7,17,27,.5);
     overflow: hidden;
   }
-
-  .fade-enter,.fade-leave-to {
-    opacity: 0;
-  }
-  .fade-enter-active,.fade-leave-active {
-    transition: all .5s;
-  }
 </style>
