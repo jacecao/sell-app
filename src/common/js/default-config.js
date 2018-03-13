@@ -12,3 +12,9 @@ export const STAR_HALF = 'half';
 
 // 针对不同的优惠信息，制定不同的class-name；
 export const CLASS_MAP = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+
+// 评价分类
+export const RATE_TYPE = {
+  GOOD: 0,
+  BAD: 1
+};

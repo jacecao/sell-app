@@ -82,7 +82,7 @@ export default {
     return {
       hasFood: false,
       mayPay: false,
-      balls: [{show: false},{show: false},{show: false},{show: false},{show: false}],
+      balls: [{show: false}, {show: false}, {show: false}, {show: false}, {show: false}],
       dropBalls: [],
       showList: false
     };
@@ -213,7 +213,7 @@ export default {
         ball.show = false;
         el.style.display = 'none';
       }
-    },
+    }
   },
   components: {
     'v-button': ShoppingCtl

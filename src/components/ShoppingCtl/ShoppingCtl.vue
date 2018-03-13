@@ -6,7 +6,7 @@
     <transition name="fade">
       <span class="count" v-show="food.count">{{food.count}}</span>
     </transition>
-    <button type="button" class="buttons" @click="clickAdd"><i class="icon-add_circle"></i></button>
+    <button type="button" class="buttons" @click="clickAdd($event)"><i class="icon-add_circle"></i></button>
   </div>
 </template>
 

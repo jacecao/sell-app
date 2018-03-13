@@ -1,5 +1,18 @@
 html {font-size: 62.5%;}
 body { margin: 0; }
+h3,p {margin: 0; padding: 0;}
+button {
+  border: none;
+  outline: none;
+  background: none;
+  margin: 0;
+  padding: 0;
+}
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
 
 .cleafix {
   display: inline-block;
@@ -15,16 +28,22 @@ body { margin: 0; }
 
 /* 1像素边框的实现 */
 
-.hr, .col-line {
+.hr, .col-line , .hr-db{
   position: relative;
 }
-.hr::after, .col-line::after{
+.hr::after, .col-line::after,
+.hr-db::after, .hr-db::before {
   content: '';
   position: absolute;
   display: block;
+}
+.hr::after, .col-line::after, .hr-db::after {
   bottom: 0;
 }
-.hr::after {
+.hr-db::before {
+  top: 0;
+}
+.hr::after, .hr-db::after, .hr-db::before {
   left: 0;
   width: 100%;
   border-bottom: 1px solid #eee;
@@ -35,13 +54,13 @@ body { margin: 0; }
   border-right: 1px solid #eee;
 }
 @media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5) {
-  .hr::after, .col-line::after {
+  .hr::after, .col-line::after, .hr-db::after, .hr-db::before {
     transform: scaleY(.7);
   }
 }
 
 @media (-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2) {
-  .hr::after, .col-line::after {
+  .hr::after, .col-line::after, .hr-db::after, .hr-db::before {
     transform: scaleY(.7);
   }
 }

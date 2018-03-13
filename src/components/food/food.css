@@ -1,0 +1,199 @@
+.container {
+  position: relative;
+}
+
+.food-item {
+  padding: 18px;
+  background-color: #fff;
+}
+
+.post-box {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+  /* padding-top 设置为100% 依据盒子的宽度来设定 */
+}
+.food-post {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.title {
+  font-size: 1.4rem;
+  line-height: 1.4rem;
+  color: rgb(7, 17, 27);
+}
+
+.food-info {
+  position: relative;
+}
+.food-info .title {
+  font-weight: 700;
+}
+.food-info .status {
+  margin-top: 8px;
+  font-size: 1rem;
+  color: rgb(147, 153, 159);
+  line-height: 1rem;
+}
+.food-info .status span {
+  margin-left: 12px;
+}
+.food-info .price {
+  margin-top: 18px;
+  font-size: 1rem;
+  color: rgb(240, 20, 20);
+  line-height: 2.4rem;
+}
+.food-info .price .now {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+.food-info .price .old {
+  margin-left: 12px;
+  color: rgb(147, 153, 159);
+}
+.food-info .price .old .bold {
+  font-weight: 700;
+}
+.food-info .add {
+  position: absolute;
+  width: 74px;
+  height: 24px;
+  right: 18px;
+  bottom: 18px;
+  border-radius: 6px;
+  background-color: rgb(0, 160, 220);
+  font-size: 1rem;
+  line-height: 24px;
+  color: #fff;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .4);
+}
+/* 商品介绍 */
+.food-desc {
+  margin-top: 16px;
+}
+.food-desc .title,
+.food-rating .title {
+  font-weight: normal;
+}
+.food-desc .text {
+  margin-top: 8px;
+  padding: 0 8px;
+  font-size: 1.2rem;
+  font-weight: 200;
+  color: rgb(77, 85, 93);
+  line-height: 2.4rem;
+  text-align: justify;
+}
+
+
+.food-rate {
+  margin-top: 16px;
+  padding-bottom: 0;
+}
+.rate-header {
+  padding: 18px 0;
+}
+.rate-header .rate-type {
+  display: inline-block;
+  padding: 8px 12px;
+  margin-left: 8px;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  border-radius: 2px;
+}
+.rate-type .num {
+  font-size: 0.8rem;
+  padding-left: 4px;
+}
+.rate-type.all {
+  margin-left: 0;
+  background-color: rgb(0, 160, 220);
+  color: #fff;
+}
+.rate-type.type-0 {
+  background-color: rgba(0, 160, 220, 0.2);
+  color: rgb(77, 85, 93);
+}
+.rate-type.type-1 {
+  background-color: rgba(77, 85, 93, .2);
+}
+.ctl-rate {
+  padding: 12px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.2rem;
+  color: rgb(147, 153, 159);
+  line-height: 1.2rem;
+}
+.ctl-rate .icon {
+  margin-right: 4px;
+  font-size: 2.4rem;
+}
+.active {
+  color: rgb(0, 160, 220);
+}
+
+.food-rate-ul {
+  padding-top: 0;
+}
+.food-rate-ul .rate-list {
+  padding: 16px 0;
+  font-size: 1rem;
+  color: rgb(147, 153, 159);
+  line-height: 1.2rem;
+}
+.rate-time {
+  float: left;
+
+}
+.user-info {
+  float: right;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.user-info .avatar {
+  height: 12px;
+  width: 12px;
+  border-radius: 100%;
+  margin-left: 6px;
+}
+.rate-list .text {
+  font-size: 1.2rem;
+  color: rgb(7, 17, 27);
+  line-height: 1.6rem;
+  margin-top: 6px;
+}
+.rate-list .text i {
+  margin-right: 4px;
+  color: rgb(147, 153, 159);
+}
+.rate-list .text .active-icon {
+  color: rgb(0, 160, 200);
+}
+
+
+/* 关闭按钮 */
+.closed {
+  position: absolute;
+  top: 340px;
+  left: 10px;
+  height: 24px;
+  width: 24px;
+  border: 1px solid rgb(0, 160, 200);
+  box-shadow: 2px 3px rgba(0, 0, 0, .4);
+  border-radius: 50%;
+  color: rgb(0, 160, 200);
+  font-size: 1.4rem;
+  line-height: 24px;
+}
+.closed i {
+
+}

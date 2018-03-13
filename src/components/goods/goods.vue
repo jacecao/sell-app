@@ -15,7 +15,7 @@
           <h3 class="food-title">{{item.name}}</h3>
           <ul class="food-item-ul">
             <li v-for="food of item.foods" class="food-list hr">
-              <div class="food-content">
+              <div class="food-content" @click="_scanFood(food)">
                 <img :src="food.icon" alt="icon" class="food-icon">
                 <div class="food-message">
                   <p class="food-name">{{food.name}}</p>
@@ -32,7 +32,9 @@
         </li>
       </ul>
     </div>
-
+    <!-- 菜品详情组件 -->
+    <v-food ref="scan-food" :food="scanFood" @balldrop="ballListener"/>
+    <!-- 底边购物栏 -->
     <v-shopcart :minPrice="seller.minPrice" :deliveryPrice="seller.deliveryPrice" :selectFoods="selectFoods" ref="shopcart"/>
   </div>
 </template>
@@ -41,6 +43,7 @@
 import {ERR_OK, CLASS_MAP} from 'common/js/default-config.js';
 import Button from 'components/ShoppingCtl/ShoppingCtl.vue';
 import ShoppingCart from 'components/ShoppingCart/ShoppingCart.vue';
+import Food from 'components/food/Food.vue';
 import Scroll from 'better-scroll';
 
 export default {
@@ -55,7 +58,8 @@ export default {
       goods: [],
       class_map: CLASS_MAP,
       listHeight: [],
-      scrollY: 0
+      scrollY: 0,
+      scanFood: {}
     };
   },
   created () {
@@ -161,12 +165,21 @@ export default {
         // console.log(shopcart);
         shopcart.drop(target);
       });
+    },
+    // 给food列表绑定点击事件
+    _scanFood (food) {
+      // 然后传入当前food对象，将对象赋值给scanFood
+      // scanFood将传给v-food组件
+      this.scanFood = food;
+      // 绑定v-food子组件,并调用该组件的show方法
+      this.$refs['scan-food'].show();
     }
 
   },
   components: {
     'v-button': Button,
-    'v-shopcart': ShoppingCart
+    'v-shopcart': ShoppingCart,
+    'v-food': Food
   }
 };
 </script>
