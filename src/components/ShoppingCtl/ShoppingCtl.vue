@@ -34,7 +34,7 @@ export default {
         this.$set(this.food, 'count', 1);
         this.isActive = true;
       } else {
-        this.food.count ++;
+        this.food.count++;
       }
        // 触发小球下落动画事件事件
        // 注意这里之所以有event.target,是因为这里由原生click事件生成一个event对象
@@ -44,7 +44,7 @@ export default {
     // 添加移除按钮
     clickRemove () {
       if (this.food.count && this.food.count > 0) {
-        this.food.count --;
+        this.food.count--;
         if (this.food.count == 0) {
           this.isActive = false;
         }

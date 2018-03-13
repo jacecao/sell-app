@@ -16,5 +16,6 @@ export const CLASS_MAP = ['decrease', 'discount', 'special', 'invoice', 'guarant
 // 评价分类
 export const RATE_TYPE = {
   GOOD: 0,
-  BAD: 1
+  BAD: 1,
+  ALL: 2
 };

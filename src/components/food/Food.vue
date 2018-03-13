@@ -16,39 +16,22 @@
           </p>
           <!-- 购买按钮 -->
           <!-- 当前商品没有购买时，才显示购买按钮 -->
-          <button class="add sell" @click="_click_sell($event)" v-show="!food.count || food.count == 0">加入购物车</button>
+          <button class="add sell" @click="_click_sell($event)">加入购物车</button>
         </div>
         <!-- 商品介绍 -->
         <div class="food-item food-desc hr-db" v-show="food.info">
           <h3 class="title">商品介绍</h3>
           <p class="text">{{food.info}}</p>
         </div>
-        <!-- 商品评价 -->
-        <div class="food-item food-rate hr-db">
-          <h3 class="title">商品评价</h3>
-          <div class="rate-header hr">
-            <span class="rate-type all">全部<span class="num">{{food.ratings.length}}</span></span>
-            <span class="rate-type type-0">推荐<span class="num">{{_rate_good}}</span></span>
-            <span class="rate-type type-1">吐槽<span class="num">{{_rate_bad}}</span></span>
-          </div>
-          <div class="ctl-rate">
-            <i class="icon icon-check_circle" @click="_has_text_rate($event)"></i> <span>值看有内容的评价</span>
-          </div>
-        </div>
-        <!-- 评价列表 -->
-        <ul class="food-item food-rate-ul hr">
-          <li class="rate-list hr" v-for="rate of food.ratings" :key="rate.username">
-            <div class="clearfix">
-              <span class="rate-time">2018-01-02 12:34</span>
-              <div class="user-info">
-                <span class="name">{{rate.username}}</span>
-                <img class="avatar" :src="rate.avatar" alt="username.avatar">
-              </div>
-            </div>
-            <p class="text"><i :class="rate.rateType ? 'icon-thumb_down' : 'icon-thumb_up active-icon'"></i>{{rate.text}}</p>
-          </li>
-        </ul>
-
+        <!-- 商品评价组件 -->
+        <v-ratings
+          :ratings="food.ratings"
+          @changeType="_changeRateType"
+          :selectRatings="selectRatings"
+          :selectType="selectType"
+          :onlyContainText="onlyContainText"
+          @changeRead="_changeRead"
+        />
         <!-- 退出按钮 -->
         <button class="closed" @click="hidden"><i class="icon-arrow_lift"></i></button>
       </div>
@@ -58,6 +41,7 @@
 
 <script>
 import Scroll from 'better-scroll';
+import RatingList from 'components/RatingList/RatingList.vue';
 import {RATE_TYPE} from 'common/js/default-config.js';
 export default {
   name: 'food-detail',
@@ -67,21 +51,10 @@ export default {
   data () {
     return {
       isShow: false,
-      ratings: []
+      selectRatings: this.food.ratings,
+      selectType: RATE_TYPE.ALL,
+      onlyContainText: false
     };
-  },
-  created () {
-    this.ratings = this.food.ratings;
-  },
-  computed: {
-    // 获取坏的评价总数
-    _rate_good () {
-      return this._total_rate(RATE_TYPE.GOOD);
-    },
-    // 获取好的评价总数
-    _rate_bad () {
-      return this._total_rate(RATE_TYPE.BAD);
-    }
   },
   methods: {
     // 点击购买按钮
@@ -91,7 +64,7 @@ export default {
         // 确保属性被创建后也是响应式的，同时触发视图更新
         this.$set(this.food, 'count', 1);
       } else {
-        this.food.count ++;
+        this.food.count++;
       }
        // 触发小球下落动画事件事件
        // 注意这里之所以有event.target,是因为这里由原生click事件生成一个event对象
@@ -102,6 +75,11 @@ export default {
       this.isShow = true;
       // 开启滚动
       this.$nextTick(() => {
+        // 重置传递数据，这个非常关键
+        // 如果不重置，那么会影响下次展示
+        this.selectRatings = this.food.ratings;
+        this.selectType = RATE_TYPE.ALL;
+        this.onlyContainText = false;
         if (!this.scroll) {
           this.scroll = new Scroll(this.$refs['food-detail'], {
             mouseWheel: true
@@ -115,38 +93,45 @@ export default {
     hidden () {
       this.isShow = false;
     },
-    // 计算各类评价总数
-    _total_rate (type) {
-      let _count = 0;
-      this.food.ratings.forEach(rating => {
-        if (rating.rateType === type) {
-          _count++;
-        }
-      });
-      return _count
-    },
-    // 点击获取有内容的评价
-    _has_text_rate (event) {
-      // 这里查看当前图标是否添加激活图标
-      if (event.target.classList.contains('active')) {
-        // 如果意见激活，那么这次点击将取消激活样式
-        event.target.classList.remove('active');
-        // 并重新获取评论数据为传递过来的原始数据
-        this.ratings = this.food.ratings;
+    // 根据指定要求筛选评论
+    // 评论筛选核心
+    _getContentRate () {
+      let _ratings = [];
+      // 现根据当前选中需要显示评论的类别
+      if (this.selectType === RATE_TYPE.ALL) {
+        this.selectRatings = this.food.ratings;
       } else {
-        // 如果没有激活图标样式，那么激活样式
-        event.target.classList.add('active');
-        let _ratings = [];
-        // 获取有内容的评价
         this.food.ratings.forEach(rating => {
+          if (rating.rateType === this.selectType) {
+            _ratings.push(rating);
+          }
+        });
+        this.selectRatings = _ratings;
+      }
+      // 再看是否需要屏蔽没有内容的评论
+      if (this.onlyContainText) {
+        _ratings = [];
+        this.selectRatings.forEach(rating => {
           if (rating.text.trim() !== "") {
             _ratings.push(rating);
           }
         });
-        // 将有内容的评价更新到当前数据中
-        this.ratings = _ratings;
+        this.selectRatings = _ratings;
       }
+    },
+    // 改变评论显示类别
+    _changeRateType (type) {
+      this.selectType = type;
+      this._getContentRate();
+    },
+    // 是否显示没有内容的评价
+    _changeRead (bool) {
+      this.onlyContainText = bool;
+      this._getContentRate();
     }
+  },
+  components: {
+    'v-ratings': RatingList
   }
 };
 </script>
