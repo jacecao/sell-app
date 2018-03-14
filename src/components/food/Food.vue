@@ -1,7 +1,7 @@
 <template>
   <transition name="move">
     <!-- 商品售卖信息 -->
-    <div class="food-detail" v-show="isShow" @click="" ref="food-detail">
+    <div class="food-detail" v-show="isShow" ref="food-detail">
       <div class="container">
         <!-- 这里为什么需要单独给img添加一个盒子呢 -->
         <!-- 因为这里我们需要保证这个图片是一个正方形，而且宽度是随着屏幕变化的，宽高不能写死 -->
@@ -15,7 +15,6 @@
             <span class="old" v-show="food.oldPrice">￥<span class="bold">{{food.oldPrice}}</span></span>
           </p>
           <!-- 购买按钮 -->
-          <!-- 当前商品没有购买时，才显示购买按钮 -->
           <button class="add sell" @click="_click_sell($event)">加入购物车</button>
         </div>
         <!-- 商品介绍 -->
@@ -23,15 +22,37 @@
           <h3 class="title">商品介绍</h3>
           <p class="text">{{food.info}}</p>
         </div>
-        <!-- 商品评价组件 -->
-        <v-ratings
-          :ratings="food.ratings"
-          @changeType="_changeRateType"
-          :selectRatings="selectRatings"
-          :selectType="selectType"
-          :onlyContainText="onlyContainText"
-          @changeRead="_changeRead"
-        />
+        <!-- 商品评论 -->
+        <div class="food-item food-rating hr-db">
+          <h3 class="title">商品评论</h3>
+          <!-- 商品评论控制组件 -->
+          <v-ratings
+            :ratings="food.ratings"
+            @changeType="_changeRateType"
+            :selectType="selectType"
+            :onlyContainText="onlyContainText"
+            @onlyContain="_changeRead"
+          />
+          <!-- 评价列表 -->
+          <template v-if="food.ratings">
+            <ul class="rate-item food-rate-ul hr">
+              <li class="rate-list hr"
+                  v-for="rate of food.ratings"
+                  v-show="_rateNeedShow(rate.rateType, rate.text)"
+                  :key="rate.username"
+              >
+                <div class="clearfix">
+                  <span class="rate-time">{{rate.rateTime | formDate}}</span>
+                  <div class="user-info">
+                    <span class="name">{{rate.username}}</span>
+                    <img class="avatar" :src="rate.avatar" alt="avatar">
+                  </div>
+                </div>
+                <p class="text"><i :class="rate.rateType ? 'icon-thumb_down' : 'icon-thumb_up active-icon'"></i>{{rate.text}}</p>
+              </li>
+            </ul>
+          </template>
+        </div>
         <!-- 退出按钮 -->
         <button class="closed" @click="hidden"><i class="icon-arrow_lift"></i></button>
       </div>
@@ -41,8 +62,9 @@
 
 <script>
 import Scroll from 'better-scroll';
-import RatingList from 'components/RatingList/RatingList.vue';
+import RatingSelect from 'components/RatingSelect/RatingSelect.vue';
 import {RATE_TYPE} from 'common/js/default-config.js';
+import {formatDate} from 'common/js/tools.js';
 export default {
   name: 'food-detail',
   props: {
@@ -55,6 +77,12 @@ export default {
       selectType: RATE_TYPE.ALL,
       onlyContainText: false
     };
+  },
+  filters: {
+    formDate (date) {
+      let _dateObj = new Date(date);
+      return formatDate(_dateObj, 'YYYY-MM-DD hh:mm:ss');
+    }
   },
   methods: {
     // 点击购买按钮
@@ -73,13 +101,13 @@ export default {
     },
     show () {
       this.isShow = true;
+      this.selectRatings = this.food.ratings;
+      this.selectType = RATE_TYPE.ALL;
+      this.onlyContainText = false;
       // 开启滚动
       this.$nextTick(() => {
         // 重置传递数据，这个非常关键
         // 如果不重置，那么会影响下次展示
-        this.selectRatings = this.food.ratings;
-        this.selectType = RATE_TYPE.ALL;
-        this.onlyContainText = false;
         if (!this.scroll) {
           this.scroll = new Scroll(this.$refs['food-detail'], {
             mouseWheel: true
@@ -101,37 +129,50 @@ export default {
       if (this.selectType === RATE_TYPE.ALL) {
         this.selectRatings = this.food.ratings;
       } else {
-        this.food.ratings.forEach(rating => {
-          if (rating.rateType === this.selectType) {
-            _ratings.push(rating);
-          }
+        _ratings = this.food.ratings.filter(rating => {
+          return rating.rateType === this.selectType;
         });
         this.selectRatings = _ratings;
       }
       // 再看是否需要屏蔽没有内容的评论
       if (this.onlyContainText) {
-        _ratings = [];
-        this.selectRatings.forEach(rating => {
-          if (rating.text.trim() !== "") {
-            _ratings.push(rating);
-          }
+        _ratings = this.selectRatings.filter(rating => {
+          return rating.text.trim() !== "";
         });
         this.selectRatings = _ratings;
+      }
+    },
+    // 看这个方法让上面的方法显得笨拙，这里再一次体现数据驱动视图的真正内涵
+    // 多体会这里的是如何实现评论分类的
+    _rateNeedShow (type, text) {
+      if (this.onlyContainText && !text) {
+        return false;
+      }
+      if (this.selectType === RATE_TYPE.ALL) {
+        return true;
+      } else {
+        return type === this.selectType;
       }
     },
     // 改变评论显示类别
     _changeRateType (type) {
       this.selectType = type;
-      this._getContentRate();
+      // this._getContentRate();
+      this.$nextTick(() => {
+        this.scroll.refresh();
+      });
     },
     // 是否显示没有内容的评价
     _changeRead (bool) {
       this.onlyContainText = bool;
-      this._getContentRate();
+      // this._getContentRate();
+      this.$nextTick(() => {
+        this.scroll.refresh();
+      });
     }
   },
   components: {
-    'v-ratings': RatingList
+    'v-ratings': RatingSelect
   }
 };
 </script>

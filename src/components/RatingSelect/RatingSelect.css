@@ -1,16 +1,8 @@
-.rate-item {
-  padding: 18px;
-  background-color: #fff;
-}
-.food-rate {
-  margin-top: 16px;
-  padding-bottom: 0;
-}
+/* 评价分类按钮 */
 .rate-header {
   padding: 18px 0;
 }
-/* 评价分类按钮 */
-.rate-header .rate-type {
+.rate-type {
   display: inline-block;
   padding: 8px 12px;
   margin-left: 8px;
@@ -25,10 +17,7 @@
 .rate-type:first-child {
   margin-left: 0;
 }
-.rate-type.type-all {
-  background-color: rgba(214, 197, 77, 0.6);
-}
-.rate-type.type-0 {
+.rate-type.type-0, .rate-type.type-all {
   background-color: rgba(0, 160, 220, 0.2);
   color: rgb(77, 85, 93);
 }
@@ -66,43 +55,4 @@
 .active {
   color: rgb(12, 171, 36);
   text-shadow: 1px 1px rgba(100,100,100,.3);
-}
-
-.food-rate-ul {
-  padding-top: 0;
-}
-.food-rate-ul .rate-list {
-  padding: 16px 0;
-  font-size: 1rem;
-  color: rgb(147, 153, 159);
-  line-height: 1.2rem;
-}
-.rate-time {
-  float: left;
-
-}
-.user-info {
-  float: right;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.user-info .avatar {
-  height: 12px;
-  width: 12px;
-  border-radius: 100%;
-  margin-left: 6px;
-}
-.rate-list .text {
-  font-size: 1.2rem;
-  color: rgb(7, 17, 27);
-  line-height: 1.6rem;
-  margin-top: 6px;
-}
-.rate-list .text i {
-  margin-right: 4px;
-  color: rgb(147, 153, 159);
-}
-.rate-list .text .active-icon {
-  color: rgb(0, 160, 200);
 }

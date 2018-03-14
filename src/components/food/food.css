@@ -91,6 +91,58 @@
   text-align: justify;
 }
 
+/*
+  商品评论
+ */
+.food-rate {
+  margin-top: 16px;
+  padding-bottom: 0;
+}
+.rate-header {
+  padding: 18px 0;
+}
+/* 评论列表 */
+.food-rate-ul {
+  padding-top: 0;
+}
+.food-rate-ul .rate-list {
+  padding: 16px 0;
+  font-size: 1rem;
+  color: rgb(147, 153, 159);
+  line-height: 1.2rem;
+}
+.rate-time {
+  float: left;
+
+}
+.user-info {
+  float: right;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.user-info .avatar {
+  height: 12px;
+  width: 12px;
+  border-radius: 100%;
+  margin-left: 6px;
+}
+.rate-list .text {
+  font-size: 1.2rem;
+  color: rgb(7, 17, 27);
+  line-height: 1.6rem;
+  margin-top: 6px;
+}
+.rate-list .text i {
+  margin-right: 4px;
+  color: rgb(147, 153, 159);
+}
+.rate-list .text .active-icon {
+  color: rgb(0, 160, 200);
+}
+
+
+
 /* 关闭按钮 */
 .closed {
   position: absolute;
@@ -104,7 +156,4 @@
   color: rgb(0, 160, 200);
   font-size: 1.4rem;
   line-height: 24px;
-}
-.closed i {
-
 }
