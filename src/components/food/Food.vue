@@ -158,17 +158,17 @@ export default {
     _changeRateType (type) {
       this.selectType = type;
       // this._getContentRate();
-      this.$nextTick(() => {
-        this.scroll.refresh();
-      });
+      // this.$nextTick(() => {
+      //   this.scroll.refresh();
+      // });
     },
     // 是否显示没有内容的评价
     _changeRead (bool) {
       this.onlyContainText = bool;
       // this._getContentRate();
-      this.$nextTick(() => {
-        this.scroll.refresh();
-      });
+      // this.$nextTick(() => {
+      //   this.scroll.refresh();
+      // });
     }
   },
   components: {

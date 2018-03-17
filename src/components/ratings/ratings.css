@@ -72,3 +72,89 @@
   text-align: left;
   background-color: #fff;
 }
+
+/* 评论列表 */
+.rating-ul {
+  padding: 0 18px;
+  background-color: #fff;
+}
+.rating-list {
+  padding: 18px 0;
+}
+.rating-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.rating-header .info {
+  /* margin-left: 12px; */
+  flex: 1;
+}
+.rating-header .time {
+  float: right;
+}
+.rating-header .avatar {
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+.rating-header .username{
+  font-size: 1rem;
+  color: rgb(7, 17, 27);
+  line-height: 1.2rem;
+  margin-bottom: 4px;
+  text-align: left;
+}
+.rating-header .time {
+  float: right;
+}
+.rating-header .score {
+  display: inline-block;
+  float: left;
+}
+.rating-header .delivery-time {
+  margin-left: 6px;
+  font-size: 1rem;
+  font-weight: 200;
+  color: rgb(147, 153, 159);
+  line-height: 1.2rem;
+  float: left;
+}
+.rating-content {
+  margin-left: 40px;
+  text-align: left;
+}
+.rating-content .info {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.rating-content .type {
+  font-size: 1.2rem;
+  color: rgb(183, 187, 192);
+  line-height: 1.6rem;
+}
+.rating-content .active-icon {
+  color: rgb(0, 160, 220);
+}
+
+.rating-content .recommend {
+  flex: 1;
+}
+.rating-content .food {
+  margin-left: 8px;
+  width: 60px;
+  display: inline-block;
+  border: 1px solid rgba(7, 17, 27, .1);
+  border-radius: 2px;
+  padding: 0 6px;
+  background-color: #fff;
+  font-size: 0.9rem;
+  color: rgb(147, 153, 159);
+  line-height: 1.6rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
