@@ -10,8 +10,18 @@ import {LEN, STAR_ON, STAR_OFF, STAR_HALF} from 'common/js/default-config.js';
 export default {
   name: 'RatingStar',
   props: {
-    size: Number,
-    score: Number
+    size: {
+      type: Number,
+      default () {
+        return 24;
+      }
+    },
+    score: {
+      type: Number,
+      default () {
+        return 0;
+      }
+    }
   },
   computed: {
     starType () {

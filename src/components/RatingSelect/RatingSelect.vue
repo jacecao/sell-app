@@ -5,15 +5,15 @@
         <span class="rate-type type-all"
               :class="{active: selectType === 2}"
               @click="_change_rate_type(2)"
-        >{{desc_text.all}}<span class="num">{{ratings.length}}</span></span>
+        >{{descText.all}}<span class="num">{{ratings.length}}</span></span>
         <span class="rate-type type-0"
               :class="{active: selectType === 0}"
               @click="_change_rate_type(0)"
-        >{{desc_text.good}}<span class="num">{{_rate_good.length}}</span></span>
+        >{{descText.good}}<span class="num">{{_rate_good.length}}</span></span>
         <span class="rate-type type-1"
               :class="{active: selectType === 1}"
               @click="_change_rate_type(1)"
-        >{{desc_text.bad}}<span class="num">{{_rate_bad.length}}</span></span>
+        >{{descText.bad}}<span class="num">{{_rate_bad.length}}</span></span>
       </div>
       <div class="ctl-rate">
         <i class="icon icon-check_circle"
@@ -30,25 +30,30 @@
 import {RATE_TYPE} from 'common/js/default-config.js';
 export default {
   props: {
+    // 输入全部评论
     ratings: {
       type: Array,
       default () {
         return [];
       }
     },
+    // 是否只显示有内容的评论
     onlyContainText: {
       type: Boolean,
       defaule () {
         return false;
       }
     },
+    // 显示需要查看的评论类型
+    // 0，好的评论。1，不好的评论， 2，所有的评论
     selectType: {
       type: Number,
       default () {
         return 2;
       }
     },
-    desc_text: {
+    // 评论控制需要显示的文字
+    descText: {
       type: Object,
       default () {
         return {

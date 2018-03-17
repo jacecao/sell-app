@@ -1,0 +1,74 @@
+.ratings {
+  position: fixed;
+  top: 192px;
+  bottom: 46px;
+  width: 100%;
+  background-color: #f3f5f7;
+  overflow: hidden;
+}
+/* 评论概要 */
+.rating-overview {
+  display: flex;
+  padding: 18px 18px;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fff;
+}
+.overview-left {
+  padding-right: 24px;
+}
+.overview-left .score {
+  font-size: 2.4rem;
+  color: rgb(255, 153, 0);
+  line-height: 2.8rem;
+}
+.overview-left .title {
+  font-size: 1.2rem;
+  color: rgb(7, 17, 27);
+  line-height: 1.2rem;
+  margin-top: 6px;
+}
+.overview-left .info {
+  font-size: 1rem;
+  color: rgba(7, 17, 27, 0.4);
+  line-height: 1rem;
+  margin-top: 8px;
+}
+
+
+.overview-right {
+  padding-left: 24px;
+  flex: 1;
+}
+.overview-right .service {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 6px;
+}
+.overview-right .service:first-child {
+  margin-top: 0;
+}
+.overview-right .title {
+  font-size: 1.2rem;
+  color: rgb(7, 17, 27);
+  line-height: 1.8rem;
+  margin-right: 12px;
+}
+.overview-right .score {
+  margin-left: 12px;
+  font-size: 1.2rem;
+  color: rgb(256, 153, 0);
+  line-height: 1.8rem;
+}
+.overview-right .info {
+  color: rgb(147, 153, 159);
+  line-height: 1.8rem;
+}
+
+.rating-ctl {
+  margin-top: 18px;
+  padding: 0 18px;
+  text-align: left;
+  background-color: #fff;
+}

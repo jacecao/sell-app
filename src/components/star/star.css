@@ -4,26 +4,26 @@
 
 .star-item {
   display: inline-block;
-  height: 1rem;
-  width: 1rem;
+  height: 10px;
+  width: 10px;
   /* background-color: #fff; */
   background-size: 100%;
-  margin-right: 1rem;
+  margin-right: 6px;
 }
 .star-icons .star-item:last-child {
   margin-right: 0;
 }
 
 .star-36 .star-item {
-  height: 1.5rem;
-  width: 1.5rem;
-  margin-right: 1.5rem;
+  height: 12px;
+  width: 12px;
+  margin-right: 8px;
 }
 
 .star-48 .star-item {
-  height: 2rem;
-  width: 2rem;
-  margin-right: 2rem;
+  height: 16px;
+  width: 16px;
+  margin-right: 10px;
 }
 
 

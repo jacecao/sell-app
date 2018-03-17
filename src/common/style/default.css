@@ -14,7 +14,7 @@ ul {
   list-style: none;
 }
 
-.cleafix {
+.clearfix {
   display: inline-block;
 }
 .clearfix::after {

@@ -5,7 +5,7 @@
         <!-- 店名-标题 -->
         <div class="detail-title">
           <h3>{{seller.name}}</h3>
-          <v-star :size="36" :score="seller.score"/>
+          <v-star :size="48" :score="seller.score"/>
         </div>
         <!-- 优惠信息 -->
         <div class="info-content">
