@@ -1,0 +1,121 @@
+.seller-page {
+  position: fixed;
+  top: 192px;
+  bottom: 46px;
+  width: 100%;
+  background-color: #f3f5f7;
+  overflow: hidden;
+}
+
+/* 头部概述 */
+.header {
+  background-color: #fff;
+  padding: 18px;
+}
+.overview {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 18px 0;
+}
+.overview .score {
+  text-align: left;
+  flex: 1;
+}
+.overview .seller-name {
+  font-size: 1.4rem;
+  color: rgb(7, 17, 27);
+  line-height: 1.4rem;
+  font-weight: 700;
+}
+.overview .stars {
+  display: inline-block;
+  margin: 8px 8px 0 0;
+}
+.overview .count {
+  font-size: 1rem;
+  color: rgb(77, 85, 93);
+  line-height: 1.8rem;
+}
+.overview .rating-count {
+  margin-left: 8px;
+}
+.overview .sell-count {
+  margin-left: 12px;
+}
+
+.overview .collection-icon{
+  font-size: 2.4rem;
+  color: #bfc4ca;
+  line-height: 2.4rem;
+}
+.overview .text {
+  font-size: 1rem;
+  color: rgb(77, 85, 93);
+  line-height: 1rem;
+}
+/* 激活收藏按钮 */
+.collection .active-icon {
+  color: rgb(240, 20, 20);
+}
+
+.desc {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 18px;
+}
+.desc-item {
+  flex: 1;
+}
+.desc .title {
+  font-size: 1rem;
+  margin-top: 4px;
+  color: rgb(147, 153, 159);
+  line-height: 1rem;
+}
+.desc .info .tag {
+  font-size: 1rem;
+}
+
+
+/* 广告与活动 */
+.items {
+  padding: 18px;
+  text-align: left;
+  margin-top: 18px;
+  background-color: #fff;
+}
+.activity .bulletin {
+  padding: 8px 12px 16px;
+  font-size: 1.2rem;
+  font-weight: 200;
+  color: rgb(240, 20, 20);
+  line-height: 2.4rem;
+  text-align: justify;
+}
+/* 支持活动 */
+.support {
+  padding: 16px 12px;
+}
+.support:last-child {
+  padding-bottom: 0;
+}
+.support:last-child::after {
+  border: none;
+}
+.support .icon {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  margin-right: 6px;
+  background-size: 100%;
+  vertical-align: top;
+}
+.support .info {
+  font-size: 1.2rem;
+  font-weight: 200;
+  color: rgb(7, 17, 27);
+  line-height: 1.6rem;
+  vertical-align: top;
+}
