@@ -9,7 +9,7 @@
 /* 评论概要 */
 .rating-overview {
   display: flex;
-  padding: 18px 18px;
+  padding: 18px;
   flex-direction: row;
   align-items: center;
   background-color: #fff;
@@ -66,6 +66,52 @@
   line-height: 1.8rem;
 }
 
+/* 适配小屏幕 */
+@media only screen and (max-width: 320px) {
+  .rating-overview {
+    padding: 9px;
+  }
+  .overview-left {
+    padding-right: 9px;
+  }
+  .overview-left .score {
+    font-size: 2rem;
+    line-height: 2rem;
+  }
+  .overview-left .title {
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    margin-top: 4px;
+  }
+  .overview-left .info {
+    font-size: 1rem;
+    line-height: 1rem;
+    margin-top: 4px;
+  }
+
+  .overview-right .service {
+    margin-top: 2px;
+  }
+  .overview-right {
+    padding-left: 8px;
+  }
+
+  .overview-right .title {
+    margin-right: 10px;
+    line-height: 1.5rem;
+  }
+  .overview-right .score {
+    margin-left: 10px;
+    line-height: 1.5rem;
+  }
+  .overview-right .info {
+    line-height: 1.5rem;
+  }
+
+}
+
+
+/* 评论查看控件 */
 .rating-ctl {
   margin-top: 18px;
   padding: 0 18px;
