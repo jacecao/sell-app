@@ -111,9 +111,11 @@
   color: rgb(147, 153, 159);
   line-height: 1.2rem;
 }
+.rate-info {
+  width: 100%;
+}
 .rate-time {
   float: left;
-
 }
 .user-info {
   float: right;
@@ -156,4 +158,10 @@
   color: rgb(0, 160, 200);
   font-size: 1.4rem;
   line-height: 24px;
+}
+
+@media only screen and (max-width: 320px) {
+  .closed {
+    top: 285px;
+  }
 }

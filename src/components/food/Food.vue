@@ -41,7 +41,7 @@
                   v-show="_rateNeedShow(rate.rateType, rate.text)"
                   :key="rate.username"
               >
-                <div class="clearfix">
+                <div class="rate-info clearfix">
                   <span class="rate-time">{{rate.rateTime | formDate}}</span>
                   <div class="user-info">
                     <span class="name">{{rate.username}}</span>
@@ -110,7 +110,8 @@ export default {
         // 如果不重置，那么会影响下次展示
         if (!this.scroll) {
           this.scroll = new Scroll(this.$refs['food-detail'], {
-            mouseWheel: true
+            mouseWheel: true,
+            click: true
           });
         } else {
           this.scroll.refresh();

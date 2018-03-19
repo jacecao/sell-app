@@ -117,9 +117,13 @@ export default {
   methods: {
     // 添加滚动组件，让左右列表能完美的实现滚动
     _init_scroll () {
-      this.menuScroll = new Scroll(this.$refs['menu'], {mouseWheel: true});
+      this.menuScroll = new Scroll(this.$refs['menu'], {
+        mouseWheel: true,
+        click: true
+      });
       this.foodsScroll = new Scroll(this.$refs['foods'], {
         mouseWheel: true,
+        click: true,
         probeType: 3
       });
 

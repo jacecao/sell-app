@@ -104,7 +104,8 @@ export default {
         this.$nextTick(() => {
           if (!this.scroll) {
             this.scroll = new Scroll(this.$refs['ratings'], {
-              mouseWheel: true
+              mouseWheel: true,
+              click: true
             });
           } else {
             this.scroll.refresh();
