@@ -2,6 +2,27 @@
 
 > sell application
 
+##
+**如何运行该应用**
+
+1. 拷贝本项目
+
+git clone git@github.com:jacecao/sell-app.git
+或直接下载该项目
+
+2. 安装运行环境
+
+在命令端进入到该项目文件夹内，运行`npm install`, 待开发依赖安装完毕后，使用`npm run dev`进入开发环境进行开发，在浏览器中打开[本地服务器的8080端口](localhost:8080/),使用模拟移动端环境查看。
+
+3. 执行生产打包
+
+`npm run build` 自动完成所有组件的打包工作
+
+
+
+##
+
+
 * #### css识别物理像素比
 ```css
 @media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5) {
