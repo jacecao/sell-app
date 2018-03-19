@@ -123,7 +123,7 @@ export default {
     },
     // 根据指定要求筛选评论
     // 评论筛选核心
-    _getContentRate () {
+    _getSelectRate () {
       let _ratings = [];
       // 现根据当前选中需要显示评论的类别
       if (this.selectType === RATE_TYPE.ALL) {

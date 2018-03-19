@@ -135,7 +135,7 @@ div.onmouseover = function () {
 </template>
 
 <script>
-// 这里需要注意的地方，如果这里自定义一个属性用来控制按钮是否显示，那么将会找出不堪的后果
+// 这里需要注意的地方，如果这里自定义一个属性用来控制按钮是否显示，那么将会出现不堪的后果
 // 不妨试一试会发生什么情况
 export default {
   name: 'shoppingCtl',
@@ -192,8 +192,6 @@ export default {
 </template>
 
 <script>
-// 这里需要注意的地方，如果这里自定义一个属性用来控制按钮是否显示，那么将会找出不堪的后果
-// 不妨试一试会发生什么情况
 export default {
   name: 'shoppingCtl',
   props: {
@@ -253,6 +251,48 @@ css这样
   top: 0;
 }
 ```
+
+* #### 如何更好的实现评论分类查看
+
+首先依然要保持数据与视图最佳的联动性，这也是VUE的最大优势和特点，但如何更好的将数据运用到视图中这就非常关键了，如在实现分类查看评论这个功能中，稍不注意就会将数据变得被动。下面是初期实现分类查看评论的方法，其中有存在很大的坑。
+
+```JavaScript
+_getSelectRate () {
+  let _ratings = [];
+  // 现根据当前选中需要显示评论的类别
+  if (this.selectType === RATE_TYPE.ALL) {
+    this.selectRatings = this.food.ratings;
+  } else {
+    _ratings = this.food.ratings.filter(rating => {
+      return rating.rateType === this.selectType;
+    });
+    this.selectRatings = _ratings;
+  }
+  // 再看是否需要屏蔽没有内容的评论
+  if (this.onlyContainText) {
+    _ratings = this.selectRatings.filter(rating => {
+      return rating.text.trim() !== "";
+    });
+    this.selectRatings = _ratings;
+  }
+},
+```
+该函数主要实现的功能就是根据当前对象指定的需要查看评论的类别，来生成当前所需的评论数据，然后再渲染到页面，这个逻辑没有为什么问题，但却需要额外的变量来保存当前筛选的评论数据，而且在每次更改查看评论内容时都需要执行该应用（也就是对数据作了一次更新），这对于视图渲染来说无疑是有点浪费性能（有些评论是无需再次渲染的）. 那么更优的解决方案就是需要灵活使用数据和VUE框架的特性，如下面这样改变代码，就显得更加优雅而且也优化了性能
+
+```JavaScript
+_rateNeedShow (type, text) {
+  if (this.onlyContainText && !text) {
+    return false;
+  }
+  if (this.selectType === RATE_TYPE.ALL) {
+    return true;
+  } else {
+    return type === this.selectType;
+  }
+}
+```
+
+你看只需要做一个判断函数，在每次更改查看评论内容时，我们只需要通过该函数来评定哪些评论需要显示哪些需要隐藏，浏览器无需再次生成新的DOM，而且整个逻辑思维更加易懂。
 
 
 * #### bug
