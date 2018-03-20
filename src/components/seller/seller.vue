@@ -43,10 +43,19 @@
       <!-- 商家实景 -->
       <section class="items photo hr-db">
         <h3 class="title">商家实景</h3>
-        <ul class="photo-list">
-          <li v-for="picture in (seller.pics)" class="support hr">
-            <img :src="picture" alt="picture" class="photo">
-          </li>
+        <div class="photo-wrapper" ref="photo-wrapper">
+          <ul class="photo-ul" ref="photo-ul">
+            <li v-for="picture in (seller.pics)" class="photo-list hr">
+              <img :src="picture" alt="picture" class="photo">
+            </li>
+          </ul>
+        </div>
+      </section>
+      <!-- 商家信息 -->
+      <section class="items sell-info hr-db">
+        <h3 class="title hr">商家信息</h3>
+        <ul class="info">
+          <li class="info-list hr" v-for="info of seller.infos">{{info}}</li>
         </ul>
       </section>
     </div>
@@ -63,21 +72,50 @@
     },
     data () {
       return {
-        collection: true,
+        collection: false,
         class_map: CLASS_MAP
       };
     },
     created () {
-      this.$nextTick(() => {
-        if (!this.scroll) {
-          this.scroll = new Scroll(this.$refs['seller'], {
-            mouseWheel: true,
-            click: true
-          });
-        } else {
-          this.scroll.refresh();
+      this._get_seller();
+    },
+    watch: {
+      // 这里需要对传入的seller作监控
+      // 这样当后期信息发送变化时可以及时刷新页面
+      'seller' () {
+        this._get_seller();
+      }
+    },
+    methods: {
+      // 获取seller数据
+      _get_seller () {
+        let _pics_length = null;
+        // 获取图片长度
+        if (this.seller.pics) {
+          _pics_length = this.seller.pics.length;
         }
-      });
+        this.$nextTick(() => {
+          if (_pics_length && this.$refs['photo-ul']) {
+            // 重新设定图片容器的宽度
+            this.$refs['photo-ul'].style.width = 120 * _pics_length + 6 * (_pics_length - 1) + 'px';
+          }
+          if (!this.scroll) {
+            this.scroll = new Scroll(this.$refs['seller'], {
+              mouseWheel: true,
+              click: true
+            });
+            // 添加图片滚动
+            this.scrollPics = new Scroll(this.$refs['photo-wrapper'], {
+              mouseWheel: true,
+              scrollX: true,
+              eventPassthrough: 'vertical'
+            });
+          } else {
+            this.scroll.refresh();
+            this.scrollPics.refresh();
+          }
+        });
+      }
     },
     components: {
       'v-star': Star

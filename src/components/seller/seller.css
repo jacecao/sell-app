@@ -74,6 +74,9 @@
   color: rgb(147, 153, 159);
   line-height: 1rem;
 }
+.desc .info {
+  font-size: 2.4rem;
+}
 .desc .info .tag {
   font-size: 1rem;
 }
@@ -118,4 +121,36 @@
   color: rgb(7, 17, 27);
   line-height: 1.6rem;
   vertical-align: top;
+}
+
+/* 商家实景 */
+.photo-wrapper {
+  width: 100%;
+  margin-top: 12px;
+  overflow: hidden;
+}
+.photo-ul {
+  /* width: 498px; */
+}
+.photo-list {
+  display: inline-block;
+  margin-right: 6px;
+}
+.photo-list:last-child {
+  margin-right: 0;
+}
+.photo-list .photo {
+  width: 120px;
+  height: 90px;
+}
+/* 商家信息 */
+.sell-info .title {
+  padding-bottom: 12px;
+}
+.info-list {
+  padding: 16px 12px;
+  font-size: 1.2rem;
+  font-weight: 200;
+  color: rgb(7, 17, 27);
+  line-height: 1.6rem;
 }
