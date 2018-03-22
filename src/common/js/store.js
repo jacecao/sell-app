@@ -1,0 +1,30 @@
+export function saveToLocal (id, key ,value) {
+  let seller = window.localStorage.__seller__;
+  // 如果没有该数据
+  if (!seller) {
+    seller = {};
+    seller[id] = {};
+  } else {
+    seller = JSON.parse(seller);
+    if (!seller[id]) {
+      seller[id] = {};
+    }
+  }
+  seller[id][key] = value;
+
+  window.localStorage.__seller__ = JSON.stringify(seller);
+};
+
+export function getFromLocal (id, key, def = false) {
+  let seller = localStorage.__seller__;
+  // 如果没有该数据
+  if (!seller) {
+    return def;
+  }
+  seller = JSON.parse(seller);
+  if (!seller[id]) {
+    return def;
+  }
+
+  return seller[id][key] || def;
+};

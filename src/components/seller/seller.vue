@@ -10,7 +10,7 @@
             <span class="count rating-count">({{seller.ratingCount}})</span>
             <span class="count sell-count">月售{{seller.sellCount}}单</span>
           </div>
-          <div class="collection">
+          <div class="collection" @click="_toggle_collection">
             <i class="icon-favorite collection-icon" :class="{'active-icon':collection}"></i>
             <p class="[collection ? 'active' : '', text]">{{collection ? '已收藏' : '收藏'}}</p>
           </div>
@@ -66,6 +66,7 @@
   import Star from 'components/star/Star.vue';
   import Scroll from 'better-scroll';
   import {CLASS_MAP} from 'common/js/default-config.js';
+  import {saveToLocal, getFromLocal} from 'common/js/store.js';
   export default {
     props: {
       seller: Object
@@ -78,6 +79,7 @@
     },
     created () {
       this._get_seller();
+      this.collection = getFromLocal(this.seller.id, 'collection');
     },
     watch: {
       // 这里需要对传入的seller作监控
@@ -87,6 +89,11 @@
       }
     },
     methods: {
+      // 点击收藏
+      _toggle_collection () {
+        this.collection = !this.collection;
+        saveToLocal(this.seller.id, 'collection', this.collection);
+      },
       // 获取seller数据
       _get_seller () {
         let _pics_length = null;

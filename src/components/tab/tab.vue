@@ -1,14 +1,18 @@
 <template>
   <ul class="tab hr">
-      <li><router-link to="/" exact>商品</router-link></li>
-      <li> <router-link to="/ratings">评价</router-link></li>
-      <li> <router-link to="/seller">商家</router-link></li>
+      <li @click="_nav_click('商品')"><router-link to="/" exact>商品</router-link></li>
+      <li @click="_nav_click('评价')"> <router-link to="/ratings">评价</router-link></li>
+      <li @click="_nav_click('商家')"> <router-link to="/seller">商家</router-link></li>
   </ul>
 </template>
 
 <script>
 export default {
-
+  methods: {
+    _nav_click (title) {
+      document.title = `sell-${title}`;
+    }
+  }
 };
 </script>
 

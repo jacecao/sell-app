@@ -35,3 +35,31 @@ function padLeftZero (str) {
   // 这个方法真的很巧妙，很棒
   return ('00' + str).substr(str.length);
 }
+
+
+// 解析URL中的搜索字符串
+// #programe ?id=sel12&key=goods
+export function urlParse () {
+
+  let _url_search = window.location.search;
+
+  if (_url_search) {
+    let obj = {};
+    let reg = /[?&][^?&]+=[^?&]+/g;
+    let _arr = _url_search.match(reg);
+
+    if (_arr) {
+      _arr.forEach(item => {
+        let __arr = item.substr(1).split('=');
+        let key = decodeURIComponent(__arr[0]);
+        let value = decodeURIComponent(__arr[1]);
+        obj[key] = value;
+      });
+      return obj;
+    }
+    return false;
+  }
+
+  return false;
+
+};

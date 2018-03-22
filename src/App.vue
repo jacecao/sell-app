@@ -2,7 +2,9 @@
   <div id="app">
     <v-header :seller="seller"/>
     <v-tab/>
-    <router-view :seller="seller"/>
+    <keep-alive>
+      <router-view :seller="seller"/>
+    </keep-alive>
   </div>
 </template>
 
@@ -10,17 +12,22 @@
 import Header from '@/components/header/Header.vue';
 import Tab from '@/components/tab/Tab.vue';
 import {ERR_OK} from 'common/js/default-config.js';
+import {urlParse} from 'common/js/tools.js';
 export default {
   name: 'App',
   data () {
-    return {seller: {}}
+    return {
+      seller: {
+        id: urlParse().id
+      }
+    }
   },
   created () {
     // 通过vue-resource中间件请求数据
-    this.$http.get('/api/seller').then(res => {
+    this.$http.get('/api/seller/?id=' + this.seller.id).then(res => {
       // 返回的错误编号与设置的编号一样，那么数据请求成功
       if (res.body.errno === ERR_OK) {
-        this.seller = res.body.data;
+        this.seller = Object.assign({}, this.seller, res.body.data);
       }
     }, res => {
       console.log('err get data');
