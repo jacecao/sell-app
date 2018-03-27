@@ -25,7 +25,11 @@
                 </div>
               </div>
               <div class="buttons">
-                <v-button :food="food" v-on:balldrop="ballListener"/>
+                <v-button
+                  :food="food"
+                  v-on:selected="selected_food"
+                  v-on:removed="removed_food"
+                />
               </div>
             </li>
           </ul>
@@ -33,9 +37,9 @@
       </ul>
     </div>
     <!-- 菜品详情组件 -->
-    <v-food ref="scan-food" :food="scanFood" @balldrop="ballListener"/>
+    <v-food ref="scan-food" :food="scanFood" @selected="selected_food"/>
     <!-- 底边购物栏 -->
-    <v-shopcart :minPrice="seller.minPrice" :deliveryPrice="seller.deliveryPrice" :selectFoods="selectFoods" ref="shopcart"/>
+    <!-- <v-shopcart :minPrice="seller.minPrice" :deliveryPrice="seller.deliveryPrice" :selectFoods="selectFoods" ref="shopcart"/> -->
   </div>
 </template>
 
@@ -51,6 +55,9 @@ export default {
   props: {
     seller: {
       type: Object
+    },
+    selectedFood: {
+      type: Array
     }
   },
   data () {
@@ -98,20 +105,6 @@ export default {
         }
       }
       return 0;
-    },
-    // 获取点击购买的产品
-    // 在点击购买的产品中我们添加了一个count属性,通过寻找该属性来获取已经选购的产品
-    // 注意count属性实在shoppingCtl组件中添加的
-    selectFoods () {
-      let _selectFoods = [];
-      this.goods.forEach(item => {
-        item.foods.forEach(food => {
-          if (food.count && food.count > 0) {
-            _selectFoods.push(food);
-          }
-        })
-      })
-      return _selectFoods;
     }
   },
   methods: {
@@ -155,22 +148,38 @@ export default {
       // 需要两个参数：1.显示的目标元素，2.过渡动画时间
       this.foodsScroll.scrollToElement(activeEle, 300);
     },
-    // 监听购车触发的小球下落动画事件
-    // 注意这里事件三方数据转换
-    // 1. ’购物按钮组件‘传递给’goods组件‘ （通过事件触发）
-    // 2. goods组件再将‘购物按钮组件’传递的数据传给‘购物车组件、（通过$ref主动执行’购物车组件中的方法‘）
-    // VUE实在太酷啦
-    ballListener (target) {
-      // 优化性能异步执行
-      this.$nextTick(() => {
-        // 通过ref获取购物车组件
-        let shopcart = this.$refs.shopcart;
-        // 执行购物车组件中小球下落动画函数
-        // console.log(shopcart);
-        shopcart.drop(target);
+    // 获取点击购买的产品
+    // 在点击购买的产品中我们添加了一个count属性,通过寻找该属性来获取已经选购的产品
+    // 注意count属性实在shoppingCtl组件中添加的
+    getSelectFoods () {
+      let _selected = [];
+      this.goods.forEach(item => {
+        item.foods.forEach(food => {
+          if (food.count && food.count > 0) {
+            _selected.push(food);
+          }
+        });
+      });
+      while (this.selectedFood.length > 0) {
+        this.selectedFood.pop();
+      }
+      _selected.forEach((food, i) => {
+        this.selectedFood[i] = food;
       });
     },
+    // 监听购买事件
+    selected_food (target) {
+      this.$emit('selected', target);
+      this.getSelectFoods();
+      // console.log(this.selectedFood);
+    },
+
+    // 监听移除食物
+    removed_food () {
+      this.getSelectFoods();
+    },
     // 给food列表绑定点击事件
+    // 展示食物详情页
     _scanFood (food) {
       // 然后传入当前food对象，将对象赋值给scanFood
       // scanFood将传给v-food组件

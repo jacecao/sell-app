@@ -14,7 +14,7 @@
         <p class="shop-tip-text">另需配送费￥{{deliveryPrice}}元</p>
       </div>
       <div class="shop-pay" :class="{'shop-pay-active': mayPay}">
-        <button class="shop-pay-button">{{changePay}}</button>
+        <button class="shop-pay-button">{{canPay}}</button>
       </div>
     </div>
     <!-- 下落小球 -->
@@ -37,10 +37,14 @@
         </div>
         <div class="list-content-wrapper" ref="list">
           <ul class="list-container">
-            <li class="list-item hr" v-for="food of selectFoods">
+            <li class="list-item hr" v-for="food of selectedFood">
               <span class="item-name">{{food.name}}</span>
               <span class="item-cash"><span class="icon">￥</span>{{food.price * food.count}}</span>
-              <v-button :food="food" class="list-ctl" @balldrop="drop"/>
+              <v-button
+                :food="food"
+                class="list-ctl"
+                @selected="drop"
+              />
             </li>
           </ul>
         </div>
@@ -57,9 +61,9 @@
 import ShoppingCtl from 'components/ShoppingCtl/ShoppingCtl.vue';
 import Scroll from 'better-scroll';
 export default {
-  name: 'shoppine-cart',
+  name: 'shopping-cart',
   props: {
-    selectFoods: {
+    selectedFood: {
       type: Array,
       // 注意数组和对象的默认值应该通过一个工厂函数返回
       default () {
@@ -91,8 +95,8 @@ export default {
     // 计算总价
     totalPrice () {
       let _totalPrice = 0;
-      if (this.selectFoods.length > 0) {
-        this.selectFoods.forEach(food =>{
+      if (this.selectedFood.length > 0) {
+        this.selectedFood.forEach(food =>{
           // 这里传过来的值应该是包含商品单价和数量的对象
           _totalPrice += food.price * food.count;
         });
@@ -102,9 +106,9 @@ export default {
     // 计算购买商品数量
     totalCount () {
       let _totalCount = 0;
-      if (this.selectFoods.length > 0) {
+      if (this.selectedFood.length > 0) {
         this.hasFood = true;
-        this.selectFoods.forEach(food =>{
+        this.selectedFood.forEach(food =>{
           // 这里传过来的值应该是包含商品单价和数量的对象
           _totalCount += food.count;
         });
@@ -116,7 +120,7 @@ export default {
       return _totalCount;
     },
     // 计算是否符合配送
-    changePay () {
+    canPay () {
       let _totalPrice = this.totalPrice;
       if (_totalPrice > 0) {
         if (_totalPrice < this.minPrice) {
@@ -153,9 +157,12 @@ export default {
     },
     // 情况购物清单
     emptySelect () {
-      this.selectFoods.forEach(food => {
+      this.selectedFood.forEach(food => {
         food.count = 0;
       });
+      while (this.selectedFood.length > 0) {
+        this.selectedFood.pop();
+      }
     },
     // 执行小球下落动画
     drop (target) {

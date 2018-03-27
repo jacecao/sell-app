@@ -15,7 +15,11 @@
             <span class="old" v-show="food.oldPrice">￥<span class="bold">{{food.oldPrice}}</span></span>
           </p>
           <!-- 购买按钮 -->
-          <button class="add sell" @click="_click_sell($event)">加入购物车</button>
+          <button
+            class="add sell"
+            v-if="is_active"
+            @click="_click_sell($event)"
+          >加入购物车</button>
         </div>
         <!-- 商品介绍 -->
         <div class="food-item food-desc hr-db" v-show="food.info">
@@ -84,6 +88,11 @@ export default {
       return formatDate(_dateObj, 'YYYY-MM-DD hh:mm:ss');
     }
   },
+  computed: {
+    is_active () {
+      return this.food.count ? false : true;
+    }
+  },
   methods: {
     // 点击购买按钮
     _click_sell (event) {
@@ -97,7 +106,7 @@ export default {
        // 触发小球下落动画事件事件
        // 注意这里之所以有event.target,是因为这里由原生click事件生成一个event对象
        // 这里将目标元素传给父组件，用于动画事件定位动画起始位置
-      this.$emit('balldrop', event.target);
+      this.$emit('selected', event.target);
     },
     show () {
       this.isShow = true;

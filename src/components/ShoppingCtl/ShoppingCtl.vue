@@ -39,7 +39,7 @@ export default {
        // 触发小球下落动画事件事件
        // 注意这里之所以有event.target,是因为这里由原生click事件生成一个event对象
        // 这里将目标元素传给父组件，用于动画事件定位动画起始位置
-      this.$emit('balldrop', event.target);
+      this.$emit('selected', event.target);
     },
     // 添加移除按钮
     clickRemove () {
@@ -49,6 +49,7 @@ export default {
           this.isActive = false;
         }
       }
+      this.$emit('removed');
     }
   }
 };

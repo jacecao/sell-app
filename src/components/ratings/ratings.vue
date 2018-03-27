@@ -82,6 +82,7 @@ import {ERR_OK, RATE_TYPE} from 'common/js/default-config.js';
 import RatingSelect from 'components/RatingSelect/RatingSelect.vue';
 import {formatDate} from 'common/js/tools.js';
 export default {
+  name: 'ratings-page',
   props: {
     seller: Object
   },
@@ -98,6 +99,7 @@ export default {
     }
   },
   created () {
+    console.log(this.selectedFood);
     this.$http.get('/api/ratings').then(res => {
       if (res.body.errno === ERR_OK) {
         this.ratings = res.body.data;

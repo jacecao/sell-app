@@ -3,13 +3,24 @@
     <v-header :seller="seller"/>
     <v-tab/>
     <keep-alive>
-      <router-view :seller="seller"/>
+      <router-view
+        :seller="seller"
+        :selectedFood="selectedFood"
+        @selected="selectedListener"
+      />
     </keep-alive>
+    <v-shopcart
+      :minPrice="seller.minPrice"
+      :deliveryPrice="seller.deliveryPrice"
+      :selectedFood="selectedFood"
+      ref="shopcart"
+    />
   </div>
 </template>
 
 <script>
 import Header from '@/components/header/Header.vue';
+import ShoppingCart from '@/components/ShoppingCart/ShoppingCart.vue';
 import Tab from '@/components/tab/Tab.vue';
 import {ERR_OK} from 'common/js/default-config.js';
 import {urlParse} from 'common/js/tools.js';
@@ -19,7 +30,8 @@ export default {
     return {
       seller: {
         id: urlParse().id
-      }
+      },
+      selectedFood: [] // 已经挑选购买的产品
     }
   },
   created () {
@@ -33,9 +45,28 @@ export default {
       console.log('err get data');
     });
   },
+  methods: {
+    // 监听购车触发的小球下落动画事件
+    // 注意这里事件三方数据转换
+    // 1. ’购物按钮组件‘传递给’goods组件‘ （通过事件触发）
+    // 2. goods组件再将‘购物按钮组件’传递的数据传给‘购物车组件、（通过$ref主动执行’购物车组件中的方法‘）
+    // VUE实在太酷啦
+    selectedListener (target) {
+      // console.log(this.selectedFood);
+      // 优化性能异步执行
+      this.$nextTick(() => {
+        // 通过ref获取购物车组件
+        let shopcart = this.$refs.shopcart;
+        // 执行购物车组件中小球下落动画函数
+        // console.log(shopcart);
+        shopcart.drop(target);
+      });
+    },
+  },
   components: {
     'v-header': Header,
-    'v-tab': Tab
+    'v-tab': Tab,
+    'v-shopcart': ShoppingCart
   }
 };
 </script>
