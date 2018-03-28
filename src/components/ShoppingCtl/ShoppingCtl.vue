@@ -49,7 +49,6 @@ export default {
           this.isActive = false;
         }
       }
-      this.$emit('removed');
     }
   }
 };

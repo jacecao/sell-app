@@ -147,7 +147,10 @@ export default {
         // 那么在下次更新DOM中生效
         this.$nextTick(() => {
           if (!this.scroll) {
-            this.scroll = new Scroll(this.$refs['list'], {mouseWheel: true});
+            this.scroll = new Scroll(this.$refs['list'], {
+              mouseWheel: true,
+              click: true
+            });
           } else {
             this.scroll.refresh();
           }

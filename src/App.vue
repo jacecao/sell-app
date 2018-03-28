@@ -5,7 +5,7 @@
     <keep-alive>
       <router-view
         :seller="seller"
-        :selectedFood="selectedFood"
+        :goods="goods"
         @selected="selectedListener"
       />
     </keep-alive>
@@ -31,10 +31,11 @@ export default {
       seller: {
         id: urlParse().id
       },
-      selectedFood: [] // 已经挑选购买的产品
+      goods: [] // 获取当前卖家中所有的产品
     }
   },
   created () {
+    this.goods = [];
     // 通过vue-resource中间件请求数据
     this.$http.get('/api/seller/?id=' + this.seller.id).then(res => {
       // 返回的错误编号与设置的编号一样，那么数据请求成功
@@ -44,6 +45,23 @@ export default {
     }, res => {
       console.log('err get data');
     });
+  },
+  computed: {
+    // 获取已经点击购买的产品
+    // 获取点击购买的产品
+    // 在点击购买的产品中我们添加了一个count属性,通过寻找该属性来获取已经选购的产品
+    // 注意count属性实在shoppingCtl组件中添加的
+    selectedFood () {
+      let _selected = [];
+      this.goods.forEach(item => {
+        item.foods.forEach(food => {
+          if (food.count && food.count > 0) {
+            _selected.push(food);
+          }
+        });
+      });
+      return _selected;
+    }
   },
   methods: {
     // 监听购车触发的小球下落动画事件

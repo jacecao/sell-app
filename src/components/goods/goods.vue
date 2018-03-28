@@ -28,7 +28,6 @@
                 <v-button
                   :food="food"
                   v-on:selected="selected_food"
-                  v-on:removed="removed_food"
                 />
               </div>
             </li>
@@ -38,8 +37,6 @@
     </div>
     <!-- 菜品详情组件 -->
     <v-food ref="scan-food" :food="scanFood" @selected="selected_food"/>
-    <!-- 底边购物栏 -->
-    <!-- <v-shopcart :minPrice="seller.minPrice" :deliveryPrice="seller.deliveryPrice" :selectFoods="selectFoods" ref="shopcart"/> -->
   </div>
 </template>
 
@@ -56,13 +53,10 @@ export default {
     seller: {
       type: Object
     },
-    selectedFood: {
-      type: Array
-    }
+    goods: Array
   },
   data () {
     return {
-      goods: [],
       class_map: CLASS_MAP,
       listHeight: [],
       scrollY: 0,
@@ -73,7 +67,9 @@ export default {
     this.$http.get('/api/goods').then(res => {
       res = res.body;
       if (res.errno === ERR_OK) {
-        this.goods = res.data;
+        res.data.forEach(item => {
+          this.goods.push(item);
+        });
         // this.foods = this.goods[0].foods;
         this.$nextTick(() => {
           this._init_scroll();
@@ -148,35 +144,10 @@ export default {
       // 需要两个参数：1.显示的目标元素，2.过渡动画时间
       this.foodsScroll.scrollToElement(activeEle, 300);
     },
-    // 获取点击购买的产品
-    // 在点击购买的产品中我们添加了一个count属性,通过寻找该属性来获取已经选购的产品
-    // 注意count属性实在shoppingCtl组件中添加的
-    getSelectFoods () {
-      let _selected = [];
-      this.goods.forEach(item => {
-        item.foods.forEach(food => {
-          if (food.count && food.count > 0) {
-            _selected.push(food);
-          }
-        });
-      });
-      while (this.selectedFood.length > 0) {
-        this.selectedFood.pop();
-      }
-      _selected.forEach((food, i) => {
-        this.selectedFood[i] = food;
-      });
-    },
     // 监听购买事件
     selected_food (target) {
+      // 触发购买事件到最外层，通知购物车组件激活小球下落动画
       this.$emit('selected', target);
-      this.getSelectFoods();
-      // console.log(this.selectedFood);
-    },
-
-    // 监听移除食物
-    removed_food () {
-      this.getSelectFoods();
     },
     // 给food列表绑定点击事件
     // 展示食物详情页
