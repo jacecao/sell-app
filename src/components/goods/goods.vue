@@ -157,6 +157,8 @@ export default {
       this.scanFood = food;
       // 绑定v-food子组件,并调用该组件的show方法
       this.$refs['scan-food'].show();
+      // 改变网页标题显示
+      window.document.title = `sell-${food.name}`;
     }
 
   },

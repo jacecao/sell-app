@@ -148,7 +148,7 @@
 /* 关闭按钮 */
 .closed {
   position: absolute;
-  top: 340px;
+  top: 300px;
   left: 10px;
   height: 24px;
   width: 24px;

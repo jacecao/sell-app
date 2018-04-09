@@ -130,6 +130,8 @@ export default {
     // 自身点击隐藏
     hidden () {
       this.isShow = false;
+      // 改变页面标题显示
+      window.document.title = 'sell-商品';
     },
     // 根据指定要求筛选评论
     // 评论筛选核心
